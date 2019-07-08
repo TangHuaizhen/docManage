@@ -1,0 +1,30 @@
+在管理后台执行完增删改查操作的时候，我们需要刷新下页面，重载数据。JQuery用location.reload()方法刷新页面；在VUE中，需要用到provide/inject这对用例。
+这对选项需要一起使用，以允许一个祖先组件向其所有子孙后代注入一个依赖，不论组件层次多深，并在上下游关系成立的时间里始终生效。
+实现原理就是，通过控制router-view（vue，或者nuxt标签nuxtjs）的显示与隐藏，来重新渲染路由区域，从而达到页面刷新的效果，show->false->show
+具体代码如下：
+APP.vue/ default.vue
+html部分：
+VUE:<router-view v-if="isRoterAlive"></router-view>
+NUXTJS: <nuxt v-if="isRoterAlive" />
+js部分：
+provide() {
+  return {
+    reload: this.reload
+  }
+},
+data() {
+  return {
+    isRouterAlive: true
+  }
+},
+methods: {
+  relaod() {
+    this.isRoterAlive = false
+    this.$nextTick(function(){
+      this.isRoterAlive = true
+    })
+  }
+}
+然后在需要刷新的页面/子组件引入依赖：inject: ['reload'],
+
+在需要执行的地方直接调用方法即可：this.reload()。
