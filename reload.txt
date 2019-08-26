@@ -1,3 +1,12 @@
+babel-polyfill
+安装
+npm install --save-dev babel-polyfill
+使用
+在你的代码头部加载babel-polyfill,注意一定要在你的代码开始前，第一个js文件的顶部。如果是vue在main.js头部，如果是其他的环境就在你入口js文件的顶部
+default.vue
+import 'babel-polyfill';
+
+
 在管理后台执行完增删改查操作的时候，我们需要刷新下页面，重载数据。JQuery用location.reload()方法刷新页面；在VUE中，需要用到provide/inject这对用例。
 这对选项需要一起使用，以允许一个祖先组件向其所有子孙后代注入一个依赖，不论组件层次多深，并在上下游关系成立的时间里始终生效。
 实现原理就是，通过控制router-view（vue，或者nuxt标签nuxtjs）的显示与隐藏，来重新渲染路由区域，从而达到页面刷新的效果，show->false->show
